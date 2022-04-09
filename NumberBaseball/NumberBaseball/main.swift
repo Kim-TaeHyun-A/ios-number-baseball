@@ -46,7 +46,6 @@ func startGame() {
     computerRandomNumbers = makeThreeRandomNumbers()
     userTryCount = Const.tryCount
     while userTryCount > Const.initCount && userStrikeCount < Const.numberCount {
-        print(computerRandomNumbers)
         let validUserInput = startUserInput()
         userStrikeCount = Const.initCount
         userBallCount = Const.initCount
