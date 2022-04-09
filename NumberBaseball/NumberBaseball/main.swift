@@ -96,7 +96,7 @@ func checkUserNumberFormat(userInput: [String]) -> [Int] {
     if isStringFormat(userInput: userInput),
         isThreeDigits(userInput: userInput),
         isSameCharacter(userInput: userInput) {
-        return makeIntArry(userInput: userInput)
+        return convertType(of: userInput)
     }
     return []
 }
@@ -132,31 +132,23 @@ func isSameCharacter(userInput: [String]) -> Bool {
     return true
 }
 
-func makeIntArry(userInput: [String]) -> [Int] {
-    var result: [Int] = []
-    for character in userInput {
-        if character == Const.separator {
-            continue
-        }
-        if let number = Int(String(character)) {
-            result.append(number)
-        } else {
-            return []
-        }
+func convertType(of userInput: [String]) -> [Int] {
+    let result: [Int] = userInput.compactMap {
+        Int(String($0))
     }
     return result
 }
 
 func checkStrike(userStrikeCount: Int, userNumbers: [Int]) -> ([Int], Int) {
-    var notStrikeNumbers: [Int] = []
+    var notStrikePossibleBallNumbers: [Int] = []
     var currentStrikeCount = userStrikeCount
     for (userIndex, userNumber) in userNumbers.enumerated() {
         if let (notStrikeNumber, strikeCount) = countStrike(userNumber: userNumber, userIndex: userIndex, userStrikeCount: currentStrikeCount) {
             currentStrikeCount = strikeCount
-            notStrikeNumbers.append(notStrikeNumber ?? Const.initCount)
+            notStrikePossibleBallNumbers.append(notStrikeNumber ?? Const.initCount)
         }
     }
-    return (notStrikeNumbers, currentStrikeCount)
+    return (notStrikePossibleBallNumbers, currentStrikeCount)
 }
 
 func countStrike(userNumber: Int, userIndex: Int, userStrikeCount: Int) -> (Int?, Int)? {
