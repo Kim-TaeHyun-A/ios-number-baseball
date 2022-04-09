@@ -192,6 +192,10 @@ func countBall(userNumber: Int, userBallCount: Int) -> Int {
 func printResult(userStrikeCount: Int, userBallCount: Int) {
     print("\(userStrikeCount) 스트라이크, \(userBallCount) 볼")
     print("남은 기회 : \(userTryCount)")
+    printWinner(userStrikeCount: userStrikeCount)
+}
+
+func printWinner(userStrikeCount: Int) {
     if userStrikeCount == Const.numberCount {
         print("사용자 승리...!")
     }
