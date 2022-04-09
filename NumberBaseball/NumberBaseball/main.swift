@@ -57,19 +57,19 @@ func startGame() {
 }
 
 func startUserInput() -> [Int] {
-    var isVaild:Bool = true
-    var validNumber: [Int] = []
-    while isVaild == true {
+    var isValid: Bool = true
+    var validNumbers: [Int] = []
+    while isValid {
         print("숫자 3개를 띄어쓰기로 구분하여 입력해주세요.")
         print("중복 숫자는 허용하지 않습니다.")
         print("입력 ", terminator: "")
         let userInput = convertUserInput()
-        validNumber = checkUserNumberFormat(userInput: userInput)
-        if validNumber != [] {
-            isVaild = false
+        validNumbers = checkUserNumberFormat(userInput: userInput)
+        if validNumbers != [] {
+            isValid = false
         }
     }
-    return validNumber
+    return validNumbers
 }
 
 func makeThreeRandomNumbers() -> [Int] {
