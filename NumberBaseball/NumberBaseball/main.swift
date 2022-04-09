@@ -162,13 +162,12 @@ func countStrike(userNumber: Int, userIndex: Int, userStrikeCount: Int) -> (Int?
     return (userNumber, strikeCount)
 }
 
-func checkBall(notStrikeNumbers: ([Int], Int), userBallCount: Int) -> (Int, Int) {
+func checkBall(notStrikeNumbers: (numbers: [Int], strikeCount: Int), userBallCount: Int) -> (Int, Int) {
     var ballCount = userBallCount
-    let strikeCount = notStrikeNumbers.1
-    for checkingNumber in notStrikeNumbers.0 {
+    for checkingNumber in notStrikeNumbers.numbers {
         ballCount = countBall(userNumber: checkingNumber, userBallCount: ballCount)
     }
-    return (strikeCount, ballCount)
+    return (notStrikeNumbers.strikeCount, ballCount)
 }
 
 func countBall(userNumber: Int, userBallCount: Int) -> Int {
