@@ -60,16 +60,20 @@ func startUserInput() -> [Int] {
     var isValid: Bool = true
     var validNumbers: [Int] = []
     while isValid {
-        print("숫자 3개를 띄어쓰기로 구분하여 입력해주세요.")
-        print("중복 숫자는 허용하지 않습니다.")
-        print("입력 ", terminator: "")
+        printUserInputGuide()
         let userInput = convertUserInput()
         validNumbers = checkUserNumberFormat(userInput: userInput)
-        if validNumbers != [] {
+        if validNumbers.isEmpty == false {
             isValid = false
         }
     }
     return validNumbers
+}
+
+func printUserInputGuide() {
+    print("숫자 3개를 띄어쓰기로 구분하여 입력해주세요.")
+    print("중복 숫자는 허용하지 않습니다.")
+    print("입력 ", terminator: "")
 }
 
 func makeThreeRandomNumbers() -> [Int] {
