@@ -142,7 +142,7 @@ func checkStrike(userStrikeCount: Int, userNumbers: [Int]) -> ([Int], Int) {
     for (userIndex, userNumber) in userNumbers.enumerated() {
         if let (notStrikeNumber, strikeCount) = countStrike(userNumber: userNumber, userIndex: userIndex, userStrikeCount: currentStrikeCount) {
             currentStrikeCount = strikeCount
-            notStrikeNumbers.append(removeOptional(notStrikeNumber: notStrikeNumber))
+            notStrikeNumbers.append(notStrikeNumber ?? 0)
         }
     }
     return (notStrikeNumbers, currentStrikeCount)
@@ -157,13 +157,6 @@ func countStrike(userNumber: Int, userIndex: Int, userStrikeCount: Int) -> (Int?
         }
     }
     return (userNumber, strikeCount)
-}
-
-func removeOptional(notStrikeNumber: Int?) -> Int {
-    if let number = notStrikeNumber {
-        return number
-    }
-    return 0
 }
 
 func checkBall(notStrikeNumbers: ([Int], Int), userBallCount: Int) -> (Int, Int) {
