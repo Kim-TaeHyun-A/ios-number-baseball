@@ -114,11 +114,12 @@ func isStringFormat(userInput: [String]) -> Bool {
 }
 
 func isThreeDigits(userInput: [String]) -> Bool {
-    let noSpaceInput: String = userInput.filter{ $0 != Const.separator }.reduce("") { $0 + String($1) }
-    if noSpaceInput.count != Const.numberCount || noSpaceInput.contains(Character(String(Const.initCount))) {
+    let inputWithoutSpace: String = userInput.filter { $0 != Const.separator }.reduce("") { $0 + String($1) }
+    guard let _ = Int(inputWithoutSpace) else {
         return false
     }
-    guard let _ = Int(noSpaceInput) else {
+    if inputWithoutSpace.count != Const.numberCount ||
+        inputWithoutSpace.contains(Character(String(Const.initCount))) {
         return false
     }
     return true
