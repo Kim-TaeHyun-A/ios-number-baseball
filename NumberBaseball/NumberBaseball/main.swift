@@ -85,13 +85,10 @@ func makeThreeRandomNumbers() -> [Int] {
 }
 
 func convertUserInput() -> [String] {
-    var userThreeNumbers: [String] = []
     guard let userInput = readLine() else {
         return []
     }
-    for character in userInput {
-        userThreeNumbers.append(String(character))
-    }
+    let userThreeNumbers = userInput.map { String($0) }
     return userThreeNumbers
 }
 
