@@ -21,11 +21,12 @@ func chooseMenu() {
 }
 
 func checkUserChoice(userInput: String) {
-    if userInput == "1" {
+    switch userInput {
+    case "1":
         startGame()
-    } else if userInput == "2" {
+    case "2":
         return
-    } else {
+    default:
         print("입력이 잘못 되었습니다.")
     }
 }
