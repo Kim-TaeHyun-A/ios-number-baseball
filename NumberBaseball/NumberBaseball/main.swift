@@ -2,10 +2,19 @@
 //  NumberBaseball - main.swift
 //  Created by yagom. 
 //  Copyright © yagom academy. All rights reserved.
-// 
+//
 
-var computerRandomNumbers:[Int] = [0, 0, 0]
-var tryCount: Int = 9
+enum Const {
+    static let tryCount: Int = 9
+    static let initCount: Int = 0
+    static let userInputCount: Int = 5
+    static let userInputRemovedDuplicatedWhiteSpaces: Int = 4
+    static let numberCount: Int = 3
+    static let separator: String = " "
+}
+
+var computerRandomNumbers = Array<Int>(repeating: Const.initCount, count: Const.numberCount)
+var userTryCount: Int = Const.tryCount
 
 func chooseMenu() {
     var userInputNumber: String?
@@ -32,17 +41,17 @@ func checkUserChoice(userInput: String) {
 }
 
 func startGame() {
-    var userStrikeCount: Int = 0
-    var userBallCount: Int = 0
+    var userStrikeCount: Int = Const.initCount
+    var userBallCount: Int = Const.initCount
     computerRandomNumbers = makeThreeRandomNumbers()
-    tryCount = 9
-    while tryCount > 0 && userStrikeCount < 3 {
+    userTryCount = Const.tryCount
+    while userTryCount > Const.initCount && userStrikeCount < Const.numberCount {
         print(computerRandomNumbers)
         let validUserInput = startUserInput()
-        userStrikeCount = 0
-        userBallCount = 0
+        userStrikeCount = Const.initCount
+        userBallCount = Const.initCount
         (userStrikeCount, userBallCount) = checkBall(notStrikeNumbers: checkStrike(userStrikeCount: userStrikeCount, userNumbers: validUserInput), userBallCount: userBallCount)
-        tryCount -= 1
+        userTryCount -= 1
         printResult(userStrikeCount: userStrikeCount, userBallCount: userBallCount)
     }
 }
@@ -65,7 +74,7 @@ func startUserInput() -> [Int] {
 
 func makeThreeRandomNumbers() -> [Int] {
     var randomNumbers: Set<Int> = []
-    while randomNumbers.count < 3 {
+    while randomNumbers.count < Const.numberCount {
         randomNumbers.insert(Int.random(in: 1...9))
     }
     return Array(randomNumbers)
@@ -95,18 +104,18 @@ func isStringFormat(userInput: [String]) -> Bool {
     if userInput.isEmpty {
         return false
     }
-    if userInput.count != 5 {
+    if userInput.count != Const.userInputCount {
         return false
     }
-    if userInput[1] != " " || userInput[3] != " " {
+    if userInput[1] != Const.separator || userInput[3] != Const.separator {
         return false
     }
     return true
 }
 
 func isThreeDigits(userInput: [String]) -> Bool {
-    let noSpaceInput: String = userInput.filter{ $0 != " " }.reduce("") { $0 + String($1) }
-    if noSpaceInput.count != 3 || noSpaceInput.contains("0") {
+    let noSpaceInput: String = userInput.filter{ $0 != Const.separator }.reduce("") { $0 + String($1) }
+    if noSpaceInput.count != Const.numberCount || noSpaceInput.contains(Character(String(Const.initCount))) {
         return false
     }
     guard let _ = Int(noSpaceInput) else {
@@ -116,7 +125,7 @@ func isThreeDigits(userInput: [String]) -> Bool {
 }
 
 func isSameCharacter(userInput: [String]) -> Bool {
-    if Set(userInput).count != 4 {
+    if Set(userInput).count != Const.userInputRemovedDuplicatedWhiteSpaces {
         return false
     }
     return true
@@ -125,7 +134,7 @@ func isSameCharacter(userInput: [String]) -> Bool {
 func makeIntArry(userInput: [String]) -> [Int] {
     var result: [Int] = []
     for character in userInput {
-        if character == " " {
+        if character == Const.separator {
             continue
         }
         if let number = Int(String(character)) {
@@ -143,7 +152,7 @@ func checkStrike(userStrikeCount: Int, userNumbers: [Int]) -> ([Int], Int) {
     for (userIndex, userNumber) in userNumbers.enumerated() {
         if let (notStrikeNumber, strikeCount) = countStrike(userNumber: userNumber, userIndex: userIndex, userStrikeCount: currentStrikeCount) {
             currentStrikeCount = strikeCount
-            notStrikeNumbers.append(notStrikeNumber ?? 0)
+            notStrikeNumbers.append(notStrikeNumber ?? Const.initCount)
         }
     }
     return (notStrikeNumbers, currentStrikeCount)
@@ -181,11 +190,11 @@ func countBall(userNumber: Int, userBallCount: Int) -> Int {
 
 func printResult(userStrikeCount: Int, userBallCount: Int) {
     print("\(userStrikeCount) 스트라이크, \(userBallCount) 볼")
-    print("남은 기회 : \(tryCount)")
-    if userStrikeCount == 3 {
+    print("남은 기회 : \(userTryCount)")
+    if userStrikeCount == Const.numberCount {
         print("사용자 승리...!")
     }
-    if tryCount == 0 {
+    if userTryCount == Const.initCount {
         print("컴퓨터 승리...!")
     }
 }
